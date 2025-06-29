@@ -2,28 +2,33 @@ import React, { useState } from "react";
 
 function App() {
   const [city, setCity] = useState("");
+  const [error, setError] = useState("");
   const [prayerTimes, setPrayerTimes] = useState(null);
 
   const getPrayerTimes = async () => {
+    // if the city input is empty, set an error message
     if (!city) {
-    //  message the user to enter a city in red color
-    const errorMessage = document.getElementById("error-message");
-    errorMessage.textContent = "Voer een stad in.";
-    errorMessage.style.color = "red";
+      setError("Please enter a city name.");
       return;
     }
-    // Clear previous error message
-    const errorMessage = document.getElementById("error-message");
-    errorMessage.textContent = "";
- 
+    setError("");
+
     try {
       const response = await fetch(
         `https://api.aladhan.com/v1/timingsByCity?city=${city}&country=Netherlands&method=2`
       );
       const data = await response.json();
+
+      if (!data.data || !data.data.timings || !data.data.timings.Fajr) {
+        setError("Invalid city. Please try again.");
+        return;
+      }
+
       setPrayerTimes(data.data.timings);
+      setError(""); // Clear previous error
     } catch (error) {
-      console.error("Fout bij ophalen:", error);
+      console.error("Fetch error:", error);
+      setError("Something went wrong. Please try again later.");
     }
   };
 
@@ -33,26 +38,26 @@ function App() {
 
       <input
         type="text"
-        placeholder="Voer je stad in..."
+        placeholder="Enter your city..."
         value={city}
         className="w-full p-2 border border-gray-300 mb-4 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
         onChange={(e) => setCity(e.target.value)}
       />
-      <button onClick={getPrayerTimes} className="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600 transition">Toon gebedstijden</button>
+      <button onClick={getPrayerTimes} className="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600 transition">Show Prayer Times</button>
 
       {prayerTimes && (
         <ul className="mt-6 space-y-2">
           {Object.entries(prayerTimes).map(([name, time]) => (
-            <li 
-            key={name} 
-            className="flex justify-between items-center p-3 bg-gray-100 rounded shadow-sm hover:bg-green-100 transition duration-200">
+            <li
+              key={name}
+              className="flex justify-between items-center p-3 bg-gray-100 rounded shadow-sm hover:bg-green-100 transition duration-200">
               <span className="capitalize font-medium text-gray-800">{name}</span>
               <span className="font-mono text-gray-600">{time}</span>
             </li>
           ))}
         </ul>
       )}
-      <div id="error-message" className="text-red-500 mt-4"></div>
+      {error && <p className="text-red-500 mt-4">{error}</p>}
     </div>
   );
 }
