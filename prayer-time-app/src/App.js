@@ -1,5 +1,12 @@
 import React, { useState } from "react";
 
+// List of cities in the Netherlands for validation
+// This list can be expanded or modified as needed.
+const NLcities = [
+  "Amsterdam", "Rotterdam", "Utrecht", "Eindhoven", "Groningen", "Tilburg",
+  "Arnhem", "Leiden", "Haarlem", "Nijmegen", "Delft", "Breda"
+];
+
 function App() {
   const [city, setCity] = useState("");
   const [error, setError] = useState("");
@@ -19,7 +26,10 @@ function App() {
       );
       const data = await response.json();
 
-      if (!data.data || !data.data.timings || !data.data.timings.Fajr) {
+      if (!NLcities.includes(city.trim())) {
+        // reset the prayer times to null
+        setPrayerTimes(null);
+        // If the city is not in the predefined list, set an error message
         setError("Invalid city. Please try again.");
         return;
       }
@@ -28,7 +38,7 @@ function App() {
       setError(""); // Clear previous error
     } catch (error) {
       console.error("Fetch error:", error);
-      setError("Something went wrong. Please try again later.");
+      setError("Something went wrong. Please try again later");
     }
   };
 
