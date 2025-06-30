@@ -8,9 +8,11 @@ const NLcities = [
 ];
 
 function App() {
+
   const [city, setCity] = useState("");
   const [error, setError] = useState("");
   const [prayerTimes, setPrayerTimes] = useState(null);
+  const [loading, setLoading] = useState(false);
 
   const getPrayerTimes = async () => {
     // if the city input is empty, set an error message
@@ -18,14 +20,17 @@ function App() {
       setError("Please enter a city name.");
       return;
     }
+
     setError("");
+    setPrayerTimes(null)
 
     try {
+      setLoading(true);
       const response = await fetch(
         `https://api.aladhan.com/v1/timingsByCity?city=${city}&country=Netherlands&method=2`
       );
       const data = await response.json();
-
+      
       if (!NLcities.includes(city.trim())) {
         // reset the prayer times to null
         setPrayerTimes(null);
@@ -33,8 +38,11 @@ function App() {
         setError("Invalid city. Please try again.");
         return;
       }
+      setTimeout(() => {
+        setPrayerTimes(data.data.timings);
+        setLoading(false);
+      }, 1000);
 
-      setPrayerTimes(data.data.timings);
       setError(""); // Clear previous error
     } catch (error) {
       console.error("Fetch error:", error);
@@ -51,9 +59,18 @@ function App() {
         placeholder="Enter your city..."
         value={city}
         className="w-full p-2 border border-gray-300 mb-4 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+
         onChange={(e) => setCity(e.target.value)}
       />
       <button onClick={getPrayerTimes} className="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600 transition">Show Prayer Times</button>
+
+      {loading && (
+        <div className="flex justify-center items-center mt-6">
+          <div className="w-10 h-10 border-4 border-green-500 border-dashed rounded-full animate-spin"></div>
+        </div>
+      )}
+      <p className="mt-4 text-gray-600">Prayer times for: <span className="font-semibold">{city}</span></p>
+
 
       {prayerTimes && (
         <ul className="mt-6 space-y-2">
