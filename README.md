@@ -21,6 +21,16 @@ A simple React app to check Islamic prayer times by city, only works on most com
 - Validates Dutch cities (temporary whitelist)
 - Error handling for empty/invalid input
 
+## Possible Improvements
+
+- Use a global city validation API instead of hardcoded list
+- Allow users to select country
+- Add Islamic date and Hijri calendar support
+- Save last searched city in local storage
+- Support for dark mode
+- Makes users don't have to scroll / change lay-out.
+
+
 ##  Live Demo
 
  [Click here to try it live](https://prayer-time-app-ccyb.vercel.app/)
