@@ -14,6 +14,7 @@ function App() {
   const [prayerTimes, setPrayerTimes] = useState(null);
   const [loading, setLoading] = useState(false);
 
+
   const getPrayerTimes = async () => {
     // if the city input is empty, set an error message
     if (!city) {
@@ -30,15 +31,16 @@ function App() {
         `https://api.aladhan.com/v1/timingsByCity?city=${city}&country=Netherlands&method=2`
       );
       const data = await response.json();
-      
-      if (!NLcities.includes(city.trim())) {
-        // reset the prayer times to null
-        setPrayerTimes(null);
-        // If the city is not in the predefined list, set an error message
-        setError("Invalid city. Please try again.");
-        return;
-      }
+
       setTimeout(() => {
+        if (!NLcities.includes(city.trim())) {
+          // reset the prayer times to null
+          setPrayerTimes(null);
+          setLoading(false);
+          // If the city is not in the predefined list, set an error message
+          setError("Invalid city. Please try again.");
+          return;
+        }
         setPrayerTimes(data.data.timings);
         setLoading(false);
       }, 1000);
@@ -60,7 +62,12 @@ function App() {
         value={city}
         className="w-full p-2 border border-gray-300 mb-4 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
 
-        onChange={(e) => setCity(e.target.value)}
+        onChange={(e) => {
+          const value = e.target.value;
+          const formatted =
+            value.charAt(0).toUpperCase() + value.slice(1).toLowerCase();
+          setCity(formatted);
+        }}
       />
       <button onClick={getPrayerTimes} className="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600 transition">Show Prayer Times</button>
 
@@ -69,7 +76,7 @@ function App() {
           <div className="w-10 h-10 border-4 border-green-500 border-dashed rounded-full animate-spin"></div>
         </div>
       )}
-      <p className="mt-4 text-gray-600">Prayer times for: <span className="font-semibold">{city}</span></p>
+      <p className="mt-4 text-gray-600" id="showPrayerTimeCity">Prayer times for: <span className="font-semibold">{city}</span></p>
 
 
       {prayerTimes && (
