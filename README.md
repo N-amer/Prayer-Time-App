@@ -6,6 +6,14 @@ A simple React app to check Islamic prayer times by city, only works on cities l
  
 ![Application picture](image.png)
 
+## What I learned
+
+- How to fetch data from a public API (AlAdhan)
+- Handling user input and validation in React
+- Adding visual feedback like loaders and error messages
+- Creating clean UI using Tailwind CSS
+- Deploying a React app with Vercel
+
 ##  Features
 
 - Get prayer times using the AlAdhan API
