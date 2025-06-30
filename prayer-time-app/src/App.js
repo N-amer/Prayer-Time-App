@@ -53,45 +53,49 @@ function App() {
   };
 
   return (
-    <div className="max-w-md mx-auto my-20 p-6 bg-white rounded-2xl shadow-xl text-center">
-      <h1 className="text-3xl font-bold text-gray-900 mb-10">Prayer Time App</h1>
+    // background  color to  bg-gradient-to-br from-green-100 via-blue-50 to-white
+    <div className="min-h-screen bg-gradient-to-br from-green-200 via-blue-50 to-white px-4 py-20">
+      <div className="max-w-md mx-auto p-6 bg-white rounded-2xl shadow-xl text-center">
+        <h1 className="text-3xl font-bold text-gray-900 mb-10">Prayer Time App</h1>
 
-      <input
-        type="text"
-        placeholder="Enter your city..."
-        value={city}
-        className="w-full p-2 border border-gray-300 mb-4 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
-
-        onChange={(e) => {
-          const value = e.target.value;
-          const formatted =
-            value.charAt(0).toUpperCase() + value.slice(1).toLowerCase();
-          setCity(formatted);
-        }}
-      />
-      <button onClick={getPrayerTimes} className="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600 transition">Show Prayer Times</button>
-
-      {loading && (
-        <div className="flex justify-center items-center mt-6">
-          <div className="w-10 h-10 border-4 border-green-500 border-dashed rounded-full animate-spin"></div>
-        </div>
-      )}
-      <p className="mt-4 text-gray-600" id="showPrayerTimeCity">Prayer times for: <span className="font-semibold">{city}</span></p>
+        <input
+          type="text"
+          placeholder="Enter your city..."
+          value={city}
+          className="w-full p-2 border border-gray-300 mb-4 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
 
 
-      {prayerTimes && (
-        <ul className="mt-6 space-y-2">
-          {Object.entries(prayerTimes).map(([name, time]) => (
-            <li
-              key={name}
-              className="flex justify-between items-center p-3 bg-gray-100 rounded shadow-sm hover:bg-green-100 transition duration-200">
-              <span className="capitalize font-medium text-gray-800">{name}</span>
-              <span className="font-mono text-gray-600">{time}</span>
-            </li>
-          ))}
-        </ul>
-      )}
-      {error && <p className="text-red-500 mt-4">{error}</p>}
+          onChange={(e) => {
+            const value = e.target.value;
+            const formatted =
+              value.charAt(0).toUpperCase() + value.slice(1).toLowerCase();
+            setCity(formatted);
+          }}
+        />
+        <button onClick={getPrayerTimes} className="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600 transition">Show Prayer Times</button>
+
+        {loading && (
+          <div className="flex justify-center items-center mt-6">
+            <div className="w-10 h-10 border-4 border-green-500 border-dashed rounded-full animate-spin"></div>
+          </div>
+        )}
+        <p className="mt-4 text-gray-600" id="showPrayerTimeCity">Prayer times for: <span className="font-semibold">{city}</span></p>
+
+
+        {prayerTimes && (
+          <ul className="mt-6 space-y-2">
+            {Object.entries(prayerTimes).map(([name, time]) => (
+              <li
+                key={name}
+                className="flex justify-between items-center p-3 bg-gray-100 rounded shadow-sm hover:bg-green-100 transition duration-200">
+                <span className="capitalize font-medium text-gray-800">{name}</span>
+                <span className="font-mono text-gray-600">{time}</span>
+              </li>
+            ))}
+          </ul>
+        )}
+        {error && <p className="text-red-500 mt-4">{error}</p>}
+      </div>
     </div>
   );
 }
