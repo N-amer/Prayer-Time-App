@@ -1,6 +1,6 @@
 #  Prayer Time App
 
-A simple React app to check Islamic prayer times by city, only works on cities located in The Netherlands.
+A simple React app to check Islamic prayer times by city, only works on most common cities located in The Netherlands.
 
 ## Screenshot
  
