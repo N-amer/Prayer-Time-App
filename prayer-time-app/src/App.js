@@ -56,13 +56,17 @@ function App() {
     // background  color to  bg-gradient-to-br from-green-100 via-blue-50 to-white
     <div className="min-h-screen bg-gradient-to-br from-green-200 via-blue-50 to-white px-4 py-20">
       <div className="max-w-md mx-auto p-6 bg-white rounded-2xl shadow-xl text-center">
-        <h1 className="text-3xl font-bold text-gray-900 mb-10">Prayer Time App</h1>
+         {/* zorg ervoor dat de h1 en span onder elkaar staan */}
+        <h1 className="text-3xl font-bold text-gray-900 mb-5">
+          Prayer Time App
+        </h1>
+        <span className="text-sm">(Netherlands edition)</span>
 
         <input
           type="text"
           placeholder="Enter your city..."
           value={city}
-          className="w-full p-2 border border-gray-300 mb-4 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+          className="w-full p-2 border border-gray-300 my-4 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
 
 
           onChange={(e) => {
