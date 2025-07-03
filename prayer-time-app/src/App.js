@@ -50,13 +50,14 @@ function App() {
       console.error("Fetch error:", error);
       setError("Something went wrong. Please try again later");
     }
+
   };
 
   return (
     // background  color to  bg-gradient-to-br from-green-100 via-blue-50 to-white
     <div className="min-h-screen bg-gradient-to-br from-green-200 via-blue-50 to-white px-4 py-20">
       <div className="max-w-md mx-auto p-6 bg-white rounded-2xl shadow-xl text-center">
-         {/* zorg ervoor dat de h1 en span onder elkaar staan */}
+        {/* zorg ervoor dat de h1 en span onder elkaar staan */}
         <h1 className="text-3xl font-bold text-gray-900 mb-5">
           Prayer Time App
         </h1>
@@ -67,6 +68,11 @@ function App() {
           placeholder="Enter your city..."
           value={city}
           className="w-full p-2 border border-gray-300 my-4 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+          onKeyDown={(e) => {
+            if (e.key === "Enter") {
+              getPrayerTimes();
+            }
+          }}
 
 
           onChange={(e) => {
