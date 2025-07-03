@@ -17,7 +17,7 @@ function App() {
 
   const getPrayerTimes = async () => {
     // if the city input is empty, set an error message
-    if (!city) {
+    if (!city.trim()) {
       setError("Please enter a city name.");
       return;
     }
